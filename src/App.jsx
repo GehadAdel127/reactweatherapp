@@ -13,6 +13,11 @@ import Typography from '@mui/material/Typography';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
+
+// redux imports 
+import { useDispatch, useSelector } from 'react-redux';
+import { changeResult } from './weatherApiSlice';
+
 // date and time
 import "moment/min/locales";
 import moment from 'moment/moment';
@@ -24,6 +29,11 @@ import { useTranslation } from 'react-i18next';
 
 moment.locale("ar")
 function App() {
+  const dispatch = useDispatch()
+  const result = useSelector((state) => {
+    console.log(state);
+    return state.result
+  })
   const { t, i18n } = useTranslation();
   const [dateAndTime, setDateAndTime] = useState("")
   const theme = createTheme({
@@ -58,6 +68,7 @@ function App() {
     setDateAndTime(moment().format('dddd MMMM YYYY'))
   }
   useEffect(() => {
+    dispatch(changeResult())
     i18n.changeLanguage("ar")
   }, [])
   useEffect(() => {
